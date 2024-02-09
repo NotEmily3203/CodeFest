@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './PriceEstimator.css';
 import axios from 'axios';
-//
 const BACKEND_URL = import.meta.env.VITE_SERVER_URL;
 
 const FlightSearchComponent = () => {

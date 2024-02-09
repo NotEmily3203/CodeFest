@@ -25,7 +25,7 @@ const FlightSearchComponent = () => {
 
     const fetchAccessToken = async () => {
         try {
-            const response = await axios.post(`${BACKEND_URL}/token`);
+            const response = await axios.post(`${BACKEND_URL}/amadeus/token`);
             return response.data.access_token;
         } catch (error) {
             console.error('Error getting access token:', error);
@@ -53,7 +53,7 @@ const FlightSearchComponent = () => {
                 nonStop: nonStop,
             }).toString();
 
-            const response = await axios.get(`${BACKEND_URL}/search?${queryParams}`, {
+            const response = await axios.get(`${BACKEND_URL}/amadeus/search?${queryParams}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -126,7 +126,7 @@ const FlightSearchComponent = () => {
     //Find IATA code function
     async function fetchData(query) {
         try {
-            const response = await fetch('http://localhost:3005/api/generateContent', {
+            const response = await fetch(`${BACKEND_URL}/api/generateContent`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -289,6 +289,7 @@ const FlightSearchComponent = () => {
                                             value={adults}
                                             onChange={(e) => setAdults(e.target.value)}
                                             placeholder="Adults"
+                                            min="1"
                                         />
                                     </div>
 
@@ -300,6 +301,7 @@ const FlightSearchComponent = () => {
                                             value={children}
                                             onChange={(e) => setChildren(e.target.value)}
                                             placeholder="Children"
+                                            min="0"
                                         />
                                     </div>
 
@@ -311,6 +313,7 @@ const FlightSearchComponent = () => {
                                             value={infants}
                                             onChange={(e) => setInfants(e.target.value)}
                                             placeholder="Infants"
+                                            min="0"
                                         />
                                     </div>
                                 </div>

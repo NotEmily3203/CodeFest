@@ -22,7 +22,7 @@ function Navbar() {
                 <>
                     <Link to="/travel" className="nav-link">Guest-Mode</Link>
                     <Link to="/signin" className="nav-link"> Sign In </Link>
-                    <Link to="/signup" className="nav-link"><button>Sign Up</button>  </Link>
+                    <Link to="/signup" className="nav-link" style={{border: "1px solid black", backgroundColor:"black", paddingTop:"7px", paddingBottom:"7px", marginRight:"30px", paddingRight:"13px", paddingLeft:"13px", borderRadius:"10px"}}>Sign Up </Link>
                 </>
             );
         } else {

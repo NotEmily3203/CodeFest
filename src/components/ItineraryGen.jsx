@@ -127,8 +127,9 @@ function ItineraryGenerator({ dim }) {
 
 
     async function fetchData(query) {
-        try {
-            const response = await fetch('https://codefest-backend.onrender.com/api/generateContent', {
+        try { //http://localhost:3005/api/generateContent
+            //https://codefest-backend.onrender.com/api/generateContent
+            const response = await fetch('http://localhost:3005/api/generateContent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './Travel.css'
 import React from 'react';
-import ItineraryGenerator from '../components/ItineraryGen';
+//import ItineraryGenerator from '../components/ItineraryGen';
 
 function Travel() {
     const [destinationInMind, setDIM] = useState("");
@@ -33,11 +33,11 @@ function Travel() {
                 </div>
 
             </div>}
-
+            {/* 
             {destinationInMind != "" && <div>
                 <ItineraryGenerator dim={destinationInMind} />
             </div>}
-
+ */}
         </div>
     )
 }

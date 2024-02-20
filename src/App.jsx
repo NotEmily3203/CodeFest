@@ -11,6 +11,7 @@ import About from './routes/About';
 import Saved from './routes/Saved';
 import Travel from './routes/Travel';
 import FlightSearchComponent from './routes/PriceEstimator';
+import TestApi from './routes/TestApi';
 /* 
 */
 function App() {
@@ -31,6 +32,7 @@ function App() {
         {/* 
 
          */}
+        <Route path="/test-api" element={<TestApi />} />
       </Routes>
     </BrowserRouter>
 

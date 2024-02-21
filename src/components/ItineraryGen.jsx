@@ -129,7 +129,7 @@ function ItineraryGenerator({ dim }) {
     async function fetchData(query) {
         try { //http://localhost:3005/api/generateContent
             //https://codefest-backend.onrender.com/api/generateContent
-            const response = await fetch('http://localhost:3005/api/generateContent', {
+            const response = await fetch('https://us-central1-codefest-97b85.cloudfunctions.net/api/generateContent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import jsPDF from 'jspdf';
 import html2canvas from "html2canvas";
-import Card from "./Card.jsx";
+//import Card from "./Card.jsx";
 
 function ItineraryGenerator({ dim }) {
     const [display, setDisplay] = useState(false);
@@ -422,12 +422,12 @@ function ItineraryGenerator({ dim }) {
                 <br />
             </div>
 
-            <div id="cards" className="cards">
+            {/* <div id="cards" className="cards">
                 {(display && response == "") ?
                     <div className="loader"></div>
                     : aiOutputFilter(response).map((item, index) => <Card key={index} index={index} input={item} />)
                 }
-            </div>
+            </div> */}
             <br />
 
 

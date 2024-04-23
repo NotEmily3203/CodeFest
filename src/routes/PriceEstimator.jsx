@@ -3,7 +3,7 @@ import './PriceEstimator.css';
 import axios from 'axios';
 const BACKEND_URL = import.meta.env.VITE_SERVER_URL;
 
-const FlightSearchComponent = () => {
+function FlightSearchComponent() {
     const [origin, setOrigin] = useState('');
     const [destination, setDestination] = useState('');
     const [nonStop, setNonStop] = useState(false);
@@ -83,7 +83,7 @@ const FlightSearchComponent = () => {
 
     //example output:
     //2024-04-02T17:50:00
-    function parseDate(date_and_time) {
+    const parseDate = (date_and_time) => {
         let formatted_date = "";
 
         let date = date_and_time.split('T')[0];
@@ -123,7 +123,7 @@ const FlightSearchComponent = () => {
     //console.log(parseDate("2024-04-02T17:50:00"));
 
     //Find IATA code function
-    async function fetchData(query) {
+    const fetchData = async (query) => {
         try {
             const response = await fetch(`${BACKEND_URL}/api/generateContent`, {
                 method: 'POST',
@@ -157,26 +157,26 @@ const FlightSearchComponent = () => {
         }
     }
 
-    async function FindCodeOne() {
+    const FindCodeOne = async () => {
         let iata = await fetchData(`Return only ONE IATA code for the following location: ${findIATAOne}`);
         //console.log("IATA CODE: ", iata);
         return iata;
     }
 
-    async function setCodeOne() {
+    const setCodeOne = async () => {
         let iata = await FindCodeOne();
         //console.log("IATA CODE SECOND FUNCTION: ", iata);
         setIataCodeOne(iata);
         //console.log("IATA CODE STATE: ", iataCodeOne);
     }
 
-    async function FindCodeTwo() {
+    const FindCodeTwo = async () => {
         let iata = await fetchData(`Return only ONE IATA code for the following location: ${findIATATwo}`);
         //console.log("IATA CODE: ", iata);
         return iata;
     }
 
-    async function setCodeTwo() {
+    const setCodeTwo = async () => {
         let iata = await FindCodeTwo();
         //console.log("IATA CODE SECOND FUNCTION: ", iata);
         setIataCodeTwo(iata);
@@ -189,6 +189,7 @@ const FlightSearchComponent = () => {
             document.body.classList.remove('price-estimator-background');
         };
     }, []);
+
     return (
         <div className="everything">
             {isLoading ? (

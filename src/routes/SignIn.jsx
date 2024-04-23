@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { auth } from '../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import '../styles/UserFiles.css';
+import backgroundImage from '../assets/destination.png';
 
 function SignIn() {
     const [email, setEmail] = useState("");
@@ -23,31 +25,29 @@ function SignIn() {
     }
 
     return (
-        <div>
-            <h1> Sign In </h1>
-            <form>
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Email"
-                />
-
-                <br />
-
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                />
-
-                <br />
-                <hr />
-
-                <button type="submit" onClick={handleSubmit}> Sign In </button>
-            </form>
-        </div>
+        <>
+            <div className='fullscreen-flex-container'
+                style={{ backgroundImage: `url(${backgroundImage})` }}>
+                <h1 className='title-text'> Sign In </h1>
+                <form className='centered-form-wrapper' onSubmit={handleSubmit}>
+                    <input
+                        className='styled-input'
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Email"
+                    />
+                    <input
+                        className='styled-input'
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password"
+                    />
+                    <button className='primary-button' type="submit">Sign In</button>
+                </form>
+            </div>
+        </>
     );
 }
 

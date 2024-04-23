@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { getAuth, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from "firebase/auth";
+import '../styles/UserFiles.css';
+import backgroundImage from '../assets/destination.png';
 
 function ChangePassword() {
     const [currentPassword, setCurrentPassword] = useState('');
@@ -24,13 +26,14 @@ function ChangePassword() {
     };
 
     return (
-        <div>
-            <h2>Change Password</h2>
-            <form onSubmit={handlePasswordChange}>
-                <div>
-                    <label>Current Password:</label>
-                    <br />
+        <div className="fullscreen-flex-container"
+            style={{ backgroundImage: `url(${backgroundImage})` }}>
+            <h2 className="title-text">Change Password</h2>
+            <form className="centered-form-wrapper" onSubmit={handlePasswordChange}>
+                <div className="styled-input">
+                    <h2 className="title-text">Current Password:</h2>
                     <input
+                        className="styled-input"
                         placeholder="Enter Current Password"
                         type="password"
                         value={currentPassword}
@@ -39,11 +42,10 @@ function ChangePassword() {
                 </div>
 
                 <hr />
-
-                <div>
-                    <label>New Password:</label>
-                    <br />
+                <div className="styled-input">
+                    <h2 className="title-text">New Password:</h2>
                     <input
+                        className="styled-input"
                         placeholder="Enter New Password"
                         type="password"
                         value={newPassword}
@@ -52,7 +54,8 @@ function ChangePassword() {
                 </div>
 
                 <hr />
-                <button type="submit">Change Password</button>
+
+                <button className="primary-button" type="submit">Change Password</button>
             </form>
         </div>
     );

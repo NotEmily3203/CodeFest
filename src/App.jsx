@@ -4,16 +4,14 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import SignUp from './routes/SignUp';
 import SignIn from './routes/SignIn'
-import DeleteAccount from './routes/Delete';
+import DeleteAccount from './routes/DeleteAccount';
 import ChangePassword from './routes/ChangePassword';
 import Home from './routes/Home';
 import About from './routes/About';
 import Saved from './routes/Saved';
 import Travel from './routes/Travel';
 import FlightSearchComponent from './routes/PriceEstimator';
-import TestApi from './routes/TestApi';
-/* 
-*/
+
 function App() {
   return (
 
@@ -29,10 +27,6 @@ function App() {
         <Route path="/saved" element={<Saved />} />
         <Route path="/travel" element={<Travel />} />
         <Route path="/prices" element={<FlightSearchComponent />} />
-        {/* 
-
-         */}
-        <Route path="/test-api" element={<TestApi />} />
       </Routes>
     </BrowserRouter>
 

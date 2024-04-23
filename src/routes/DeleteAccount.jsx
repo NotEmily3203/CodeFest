@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { getAuth, reauthenticateWithCredential, EmailAuthProvider, deleteUser } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
+import '../styles/UserFiles.css';
+import backgroundImage from '../assets/destination.png';
 
 function DeleteAccount() {
     const [password, setPassword] = useState('');
@@ -31,19 +33,20 @@ function DeleteAccount() {
     };
 
     return (
-        <div>
-            <h2>Please enter your password to confirm account deletion:</h2>
-
-            <input
-                placeholder="Enter Password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <br />
-            <hr />
-            <button onClick={handleDeleteAccount}>Delete My Account</button>
+        <div className="fullscreen-flex-container"
+            style={{ backgroundImage: `url(${backgroundImage})` }}>
+            <h2 className="title-text">Delete Account</h2>
+            <form className="centered-form-wrapper" onSubmit={(e) => { e.preventDefault(); handleDeleteAccount(); }}>
+                <input
+                    className="styled-input"
+                    placeholder="Enter Password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <br />
+                <button className="primary-button" type="submit">Delete My Account</button>
+            </form>
         </div>
     );
 }

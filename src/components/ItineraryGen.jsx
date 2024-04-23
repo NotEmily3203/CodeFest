@@ -39,7 +39,7 @@ function ItineraryGenerator({ dim }) {
         setLocation(event.target.value);
     };
 
-    function uncheckAllCheckboxes() {
+    const uncheckAllCheckboxes = () => {
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
         checkboxes.forEach((checkbox) => {
@@ -128,8 +128,7 @@ function ItineraryGenerator({ dim }) {
 
 
     async function fetchData(query) {
-        try { //http://localhost:3005/api/generateContent
-            //https://codefest-backend.onrender.com/api/generateContent
+        try {
             const response = await fetch(`${BACKEND_URL}/api/generateContent`, {
                 method: 'POST',
                 headers: {

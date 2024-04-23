@@ -1,127 +1,135 @@
 #root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
 }
 
 .card {
-    padding: 2em;
+  padding: 2em;
 }
 
 .read-the-docs {
-    color: #888;
+  color: #888;
 }
 
-.climate{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+.climate {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
-.climate label{
-    padding: 2rem;
+.climate label {
+  padding: 2rem;
 }
 
-#makepdf{
-    text-align: left;
-    border:1px solid black;
-    border-radius: 10px;
-    padding:15px;
-    margin: 10px;
-    background-color: #313131;
-    white-space: pre-wrap;
-    max-width: 100%;
+#makepdf {
+  text-align: left;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px;
+  background-color: #313131;
+  white-space: pre-wrap;
+  max-width: 100%;
 }
 
-#theForm{
-    text-align:left;
+#theForm {
+  text-align: left;
 }
+
 #activities {
-    color: white;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #000000;
-    width: 200px;
-    height: 100px;
-    background-color: #343434;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #000000;
+  width: 200px;
+  height: 100px;
+  background-color: #343434;
+}
+
+#activitiesform {
+  display: flex;
+  max-height: 100%;
+  padding-bottom: 5px;
+}
+
+.subActivities {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+#activitiesTop {
+  display: flex;
+  justify-content: space-between;
+}
+
+#otherActivities {
+  font-size: 14px;
+  margin-top: 22px;
+}
+
+.loader {
+  border: 10px solid #f3f3f3;
+  /* Light grey */
+  border-top: 10px solid #3498db;
+  /* Blue */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
 
-  #activitiesform{
-    display:flex;
-    max-height:100%;
-    padding-bottom:5px;
+  100% {
+    transform: rotate(360deg);
   }
+}
 
-  .subActivities{
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    padding-right:15px;
-    padding-left:15px;
-  }
-
-  #activitiesTop{
-    display:flex;
-    justify-content: space-between;
-  }
-
-  #otherActivities{
-    font-size: 14px;
-    margin-top:22px;
-  }
-  
- .loader{
-    border: 10px solid #f3f3f3; /* Light grey */
-    border-top: 10px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    animation: spin 2s linear infinite;
-    margin: 0 auto;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-.travel{
+.travel {
   margin-top: 6rem;
   text-align: center;
   align-items: center;
   justify-content: center;
 }
-  
+
 .travel-page-background {
   background-image: url(../assets/destination.png);
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.travel-button{
-  display:flex;
+.travel-button {
+  display: flex;
   align-items: center;
   justify-content: left;
-  border-radius:20px;
+  border-radius: 20px;
   width: 350px;
-  padding-left:15px;
-  padding-top:0px;
-  padding-bottom:0px;
-  padding-right:0px;
+  padding-left: 15px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 0px;
 }
 
-.travel-title{
-  display:flex;
+.travel-title {
+  display: flex;
   text-align: center;
 }
 
-.travel-subtitle{
+.travel-subtitle {
   text-align: center;
 }
 
-.button-title{
+.button-title {
   font-weight: bolder;
-  font-size:x-large;
+  font-size: x-large;
 }

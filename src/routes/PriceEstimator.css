@@ -83,6 +83,8 @@ select {
 
 .price-estimator-background {
     background-image: url(../assets/plane2.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .form-title {

@@ -3,7 +3,7 @@ import '../routes/Travel.css'
 import React from 'react';
 import { db, auth } from '../firebaseConfig.js';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import jsPDF from 'jspdf';
 import html2canvas from "html2canvas";
 import Card from "./Card.jsx";
@@ -11,6 +11,7 @@ const BACKEND_URL = import.meta.env.VITE_SERVER_URL;
 
 function ItineraryGenerator({ dim }) {
     const [display, setDisplay] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
 
     const [budget, setBudget] = useState(0);
     const [activities, setActivities] = useState("");
@@ -88,7 +89,7 @@ function ItineraryGenerator({ dim }) {
             else
                 temp += "I would like to do the aforementioned activities in " + location + ". Please put the generated activities in a numbered list (1.,2.,3.,etc.) each with a title and detailed bullet points. Go directly into the numbered list, no general title or anything else on the first line. Include price rounded to the nearest whole number.";
         }
-        console.log(temp);
+        // console.log(temp);
         //resetting inputs
         uncheckAllCheckboxes();
         if (dim == "No") {
@@ -142,17 +143,17 @@ function ItineraryGenerator({ dim }) {
             }
 
             const data = await response.json();
-            console.log("Full RESPONSE: ", data);
+            // console.log("Full RESPONSE: ", data);
 
             let textContent = '';
             if (data && data.response && data.response.candidates && data.response.candidates.length > 0 &&
                 data.response.candidates[0].content && data.response.candidates[0].content.parts &&
                 data.response.candidates[0].content.parts.length > 0 && data.response.candidates[0].content.parts[0].text) {
                 textContent = data.response.candidates[0].content.parts[0].text;
-                console.log("Extracted Text: ", textContent);
+                // console.log("Extracted Text: ", textContent);
 
                 const filteredOutput = aiOutputFilter(textContent).filter(item => item.length != 0);
-                console.log("Filtered Output: ", filteredOutput);
+                // console.log("Filtered Output: ", filteredOutput);
 
                 setResponse(filteredOutput.join('\n'));
             } else {
@@ -211,54 +212,84 @@ function ItineraryGenerator({ dim }) {
         setDisplayName(event.target.value);
     }
 
+    const [loaderItinerary, setLoaderItinerary] = useState(false);
 
-    const [loaderIteniery, setLoaderItinerary] = useState(false);
+    const saveItinerary = async (displayName) => {
+        if (!displayName) {
+            alert("Please enter a name for your itinerary.");
+            setLoaderItinerary(false);
+            return;
+        }
 
-    const saveItinerary = async () => {
         setLoaderItinerary(true);
         const pdf = new jsPDF("p", "mm", "a4");
         const data = document.getElementById("cards");
+
         try {
             const canvas = await html2canvas(data, { logging: true, letterRendering: 1, useCORS: true });
             const imgWidth = 210;
             const imgHeight = canvas.height * imgWidth / canvas.width;
+            const imgData = canvas.toDataURL("image/jpeg", 0.75);
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            const totalPages = Math.ceil(imgHeight / pageHeight);
 
-            const imgData = canvas.toDataURL("image/png");
-            const totalPages = Math.ceil(imgHeight / pdf.internal.pageSize.getHeight());
-            // Loop through pages
             for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
-                // Add a new page for each iteration
                 if (pageIndex > 0) {
                     pdf.addPage();
                 }
-
-                // Adjust y position based on the pageIndex
-                const adjustedY = - (pageIndex * pdf.internal.pageSize.getHeight());
-
-                pdf.addImage(imgData, "PNG", 0, adjustedY, imgWidth, imgHeight);
+                const adjustedY = -(pageIndex * pageHeight);
+                pdf.addImage(imgData, "JPEG", 0, adjustedY, imgWidth, imgHeight);
             }
+
             const pdfBlob = pdf.output('blob');
             const storage = getStorage();
-            const storageRef = ref(storage, `pdfs/${auth.currentUser.uid}/itinerary-${Date.now()}.pdf`);
+            const uid = auth.currentUser.uid;
+            const storageRef = ref(storage, `${uid}/${displayName}/${Date.now()}.pdf`);
+            const uploadTask = uploadBytesResumable(storageRef, pdfBlob);
 
-            await uploadBytes(storageRef, pdfBlob);
-            const downloadURL = await getDownloadURL(storageRef);
-            await savePdfUrlToFirestore(downloadURL, displayName);
-            setLoaderItinerary(false);
-            alert("Itinerary saved!");
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    setUploadProgress(progress);
+                },
+                (error) => {
+                    console.error("Upload failed: ", error);
+                    alert("Failed to upload PDF. Please try again.");
+                    setLoaderItinerary(false);
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        savePdfUrlToFirestore(uid, downloadURL, displayName).then(() => {
+                            setLoaderItinerary(false);
+                            alert("Itinerary saved!");
+                        }).catch((error) => {
+                            console.error("Error saving document to Firestore: ", error);
+                            alert("Failed to save document to Firestore. Please try again.");
+                            setLoaderItinerary(false);
+                        });
+                    });
+                }
+            );
         } catch (error) {
-            console.error("Error: ", error);
+            console.error("Error generating PDF: ", error);
+            alert("Failed to save itinerary. Please try again.");
+            setLoaderItinerary(false);
         }
-    }
+    };
 
-    const savePdfUrlToFirestore = async (pdfUrl) => {
-        await addDoc(collection(db, "itineraries"), {
-            userId: auth.currentUser.uid,
-            pdfUrl,
-            displayName,
-            createdAt: new Date()
-        });
-    }
+    const savePdfUrlToFirestore = async (uid, pdfUrl, displayName) => {
+        try {
+            await addDoc(collection(db, `${uid}_itineraries`), {
+                pdfUrl,
+                displayName,
+                createdAt: new Date()
+            });
+        } catch (error) {
+            console.error("Error saving to Firestore: ", error);
+            throw new Error("Firestore save failed");
+        }
+    };
+
 
     return (
         <div id="itineraryGen-container">
@@ -440,7 +471,7 @@ function ItineraryGenerator({ dim }) {
             </div>}
 
             {sessionStorage.getItem("accessToken") != null && display &&
-                <div>
+                <>
                     <input
                         type="text"
                         placeholder="Enter Display Name"
@@ -451,13 +482,17 @@ function ItineraryGenerator({ dim }) {
                     <br />
                     <br />
 
-                    {loaderIteniery && <><div className="loader"></div><br /></>}
-                    <button onClick={saveItinerary}
-                        disabled={!displayName.trim()}
-                    >
+                    {loaderItinerary && (
+                        <div style={{ width: `${uploadProgress}%`, backgroundColor: 'green', height: '20px' }}>
+                            Loading: {Math.round(uploadProgress)}%
+                        </div>
+                    )}
+
+                    <button onClick={() => saveItinerary(displayName)}
+                        disabled={!displayName.trim()}>
                         Save Itinerary to Profile
                     </button>
-                </div>}
+                </>}
         </div>
     )
 }

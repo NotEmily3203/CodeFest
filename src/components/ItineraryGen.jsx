@@ -483,7 +483,7 @@ function ItineraryGenerator({ dim }) {
                     <br />
 
                     {loaderItinerary && (
-                        <div style={{ width: `${uploadProgress}%`, backgroundColor: 'green', height: '20px' }}>
+                        <div style={{ width: `${uploadProgress}%`, backgroundColor: '#4CAF50', height: '20px' }}>
                             Loading: {Math.round(uploadProgress)}%
                         </div>
                     )}
@@ -492,6 +492,7 @@ function ItineraryGenerator({ dim }) {
                         disabled={!displayName.trim()}>
                         Save Itinerary to Profile
                     </button>
+                    <br />
                 </>}
         </div>
     )

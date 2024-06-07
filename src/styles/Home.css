@@ -1,0 +1,36 @@
+/* Home.css */
+.home {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    padding-left: 30px;
+    background: url('../assets/about1.jpg') center center / cover no-repeat;
+    color: white;
+}
+
+.home__heading {
+    width: 100%;
+}
+
+.home__heading-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.home__heading-text button {
+    opacity: 0.75;
+    background-color: #000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.home__heading-text button:hover {
+    opacity: 1;
+}

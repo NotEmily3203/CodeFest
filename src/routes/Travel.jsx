@@ -33,7 +33,7 @@ function Travel() {
                 </div>
 
             </div>}
-            
+
             {destinationInMind != "" && <div>
                 <ItineraryGenerator dim={destinationInMind} />
             </div>}

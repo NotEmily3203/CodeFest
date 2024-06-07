@@ -57,7 +57,16 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-right: 15%;
 }
+
+.auth-background {
+    background-image: url('../assets/destination.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 
 @media (min-width: 1200px) {
     .fullscreen-flex-container {}

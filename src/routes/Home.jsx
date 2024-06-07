@@ -1,14 +1,20 @@
-import React from "react";
-import about1 from "../assets/about1.jpg"
-import "./Home.css"
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import "./Home.css";
 
 function Home() {
     const navigate = useNavigate();
 
+    useEffect(() => {
+        document.body.classList.add('home-page-background');
+        return () => {
+            document.body.classList.remove('home-page-background');
+        };
+    }, []);
+
     return (
         <div className="home">
-            <div className="home__heading" style={{ backgroundImage: `url(${about1})` }}>
+            <div className="home__heading">
                 <div className="home__heading-text">
                     <h1>Travel like a LOCO</h1>
                     <p>What would you like to do today? The possibilities are endless.</p>

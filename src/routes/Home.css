@@ -6,6 +6,7 @@
     width: 100vw;
     background-size: cover;
     background-position: center center;
+    background-repeat: no-repeat;
     position: relative;
 }
 
@@ -34,5 +35,12 @@
 
 .home__heading {
     background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.home-page-background {
+    background-image: url('../assets/about1.jpg');
+    background-size: cover;
+    background-position: center center;
     background-repeat: no-repeat;
 }

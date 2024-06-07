@@ -18,7 +18,7 @@ function Home() {
                 <div className="home__heading-text">
                     <h1>Travel like a LOCO</h1>
                     <p>What would you like to do today? The possibilities are endless.</p>
-                    <button onClick={() => navigate("/travel")}>Travel Generator</button>
+                    <button onClick={() => navigate("/travel")}> Travel Generator </button>
                 </div>
             </div>
         </div>
